@@ -21,13 +21,12 @@ const components = {
         type={inputType}
         id={name}
         name={name}
-        required={required === false ? false : true}
         onChange={handleChange}
         value={inputValues}
-        ref={require === true ? register({ required: true }): register}
+        ref={required === true ? register({ required: true }) : register}
       />
       {copy && <label htmlFor={name}>{copy}</label>}
-      {errors.exampleRequired && <span>This field is required</span>}
+      {errors[name] && <p>{name} field is required</p>}
     </>
   ),
   text: ({ name, copy }) => (
@@ -62,12 +61,12 @@ const Content = () => {
   const content = useContext(ContentData)
   const { formSections, path } = content
   const type = path.substring(1)
-  const [data, setData] = useState({[type]: ''})
+  const [data, setData] = useState({user: {}, privacy: {}})
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = data => dispatch({ type, payload: {[type]: data} })
+  const onSubmit = () => console.log(data)
   const handleClick = () => {
-    dispatch({ type, payload: {[type]: data} })
+    dispatch({ type, payload: {[type]: data[type]} })
   }
 
   const handleChange = e => {
@@ -77,6 +76,7 @@ const Content = () => {
 
   useEffect(() => {
     if (state.user.name && state.user.email && state.user.password) {
+      console.log('hi')
       dispatch({ type: 'done', payload: {done: true} })
     } else {
       dispatch({ type: 'done', payload: {done: false} })
@@ -89,7 +89,9 @@ const Content = () => {
       formSections.map(section => {
         const Component = components[section.type]
         const inputValues = state[type][section.name]
-        const componentProps = props[section.type]({...section, register, errors, handleClick, handleChange, inputValues})
+        const componentProps = props[section.type]({
+          ...section, register, errors, handleClick, handleChange, inputValues
+        })
 
         return (
           <div key={section.name}>

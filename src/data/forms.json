@@ -30,7 +30,7 @@
       {
         "name": "Submit",
         "type": "button",
-        "buttonType": "button"
+        "buttonType": "submit"
       }
     ]
   },
