@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Layout from './components/Layout'
+import Content from './components/Content'
 
-function App() {
+// To implement a dynamic way to write the bellow Routes
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <Layout>
+        {(pathName, content) => (
+          <Route
+            path={pathName}
+            render={() => (
+              <Content content={content} />
+            )}
+          />
+        )}
+      </Layout>
+    </Router>
+  )
 }
 
 export default App;
