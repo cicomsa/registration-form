@@ -23,7 +23,7 @@ const components = {
         name={name}
         onChange={handleChange}
         value={inputValues}
-        ref={required === true ? register({ required: true }) : register}
+        ref={register({ required })}
       />
       {copy && <label htmlFor={name}>{copy}</label>}
       {errors[name] && <p>{name} field is required</p>}
@@ -43,7 +43,7 @@ const initialState = {
   done: false
 }
 
-function reducer(state, { type, payload }) {
+const reducer = (state, { type, payload }) => {
   switch (type) {
     case 'user':
       return { ...state, user: {...state.user, ...payload.user} }
@@ -70,13 +70,15 @@ const Content = () => {
   }
 
   const handleChange = e => {
-    const { name, value } = e.target
-    setData({...data, [type]: {...data[type], [name]: value}})
+    const { name, value, checked } = e.target
+    setData({...data, [type]: {
+      ...data[type],
+      [name]: checked  === true || checked === false ? checked : value
+    }})
   }
 
   useEffect(() => {
     if (state.user.name && state.user.email && state.user.password) {
-      console.log('hi')
       dispatch({ type: 'done', payload: {done: true} })
     } else {
       dispatch({ type: 'done', payload: {done: false} })
