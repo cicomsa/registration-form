@@ -11,11 +11,11 @@ const Layout = ({ children }) => {
 
   // data should come from an API call/GraphQL query - mock functionality not implemented
   const content = data.find(content => content.path === pathName)
-  const { formSections } = content
+  const { formSections, path } = content
   const links = data.map(content => ({ path: content.path, linkTitle: content.linkTitle }))
 
   return (
-    <ContentData.Provider value={{ formSections }}>
+    <ContentData.Provider value={{ formSections, path }}>
       <Header links={links} pathName={pathName} />
       {children(pathName)}
     </ContentData.Provider>
