@@ -8,12 +8,10 @@ const App = () => {
   return (
     <Router>
       <Layout>
-        {(pathName, content) => (
+        {pathName => (
           <Route
             path={pathName}
-            render={() => (
-              <Content content={content} />
-            )}
+            component={Content}
           />
         )}
       </Layout>

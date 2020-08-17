@@ -2,46 +2,58 @@
   {
     "path": "/user",
     "linkTitle": "User",
-    "button": "Submit",
     "formSections": [
       {
         "name": "name",
+        "type": "input",
         "inputType": "text",
         "required": true
       },
       {
         "name": "role",
+        "type": "input",
         "inputType": "text",
         "required": false
       },
       {
         "name": "email",
+        "type": "input",
         "inputType": "text",
         "required": true
       },
       {
         "name": "password",
+        "type": "input",
         "inputType": "encryption",
         "required": true
+      },
+      {
+        "name": "Submit",
+        "type": "button"
       }
     ]
   },
   {
     "path": "/privacy",
     "linkTitle": "Privacy",
-    "button": "Submit",
     "formSections": [
       {
         "name": "updates",
+        "type": "input",
         "inputType": "checkbox",
         "required": "false",
         "copy": "Receive updates about Tray.io product by email"
       },
       {
         "name": "marketing",
+        "type": "input",
         "inputType": "checkbox",
         "required": "false",
         "copy": "Receive communication by email for other products created by the Tray.io team"
+      },
+      {
+        "name": "Submit",
+        "type": "button"
       }
     ]
   },
@@ -51,6 +63,7 @@
     "formSections": [
       {
         "name": "Checked",
+        "type": "text",
         "copy": "Please verify your email address, you should have received an email from us already!"
       }
     ]

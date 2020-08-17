@@ -10,9 +10,9 @@ const PageLink = ({ linkTitle, path, active }) =>  {
   }
 
   return (
-    <button type="button" className={`${active ? "active" : ""}`} onClick={handleClick}>
-      {linkTitle}
-    </button>
+    <li onClick={handleClick}>
+      <p className={`link ${active ? "active" : ""}`}>{linkTitle}</p>
+    </li>
   )
 }
 

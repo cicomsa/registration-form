@@ -1,3 +1,8 @@
 .active {
   background: blue;
 }
+
+.link {
+  cursor: pointer;
+  margin-right: 20px;
+}

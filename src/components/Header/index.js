@@ -1,9 +1,10 @@
 import React from 'react'
 import PageLink from '../PageLink'
+import './index.css'
 
 const Header = ({ links, pathName }) => {
   return (
-    <div>
+    <ul className="links">
       {
         links
           .map(content => {
@@ -20,7 +21,7 @@ const Header = ({ links, pathName }) => {
           }
         )
       }
-    </div>
+    </ul>
   )
 }
 
