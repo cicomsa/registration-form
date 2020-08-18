@@ -50,13 +50,22 @@ const Content = () => {
   const { formSections, path, contextValue } = content
   const { state, dispatch } = contextValue
   const pageType = path.substring(1)
-  const [data, setData] = useState({user: {}, privacy: {}})
+  const [data, setData] = useState({ user: {}, privacy: {} })
   const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
 
   const onSubmit = () => {
     const nextpageType = pageType === 'user' ? '/privacy' : pageType === 'privacy' ? '/done' : '/user'
-    dispatch({ type: pageType, payload: {[pageType]: data[pageType]} })
+    const pageData = () => {
+      if (pageType === 'privacy') {
+        if (!data.privacy.updates) data.privacy.updates = false
+        if (!data.privacy.marketing) data.privacy.marketing = false
+      }
+
+      return data[pageType]
+    }
+
+    dispatch({ type: pageType, payload: {[pageType]: pageData()} })
     history.push(nextpageType)
   }
 

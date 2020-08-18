@@ -69,7 +69,7 @@
         "name": "Done",
         "type": "text",
         "copyFormCompleted": "Please verify your email address, you should have received an email from us already!",
-        "copyFormIncompleted": "Please complete and submit the User and Privacy forms in order to complete the registration process."
+        "copyFormIncompleted": "Please complete and submit both the User and Privacy forms in order to complete the registration process."
       }
     ]
   }

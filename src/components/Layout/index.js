@@ -38,13 +38,14 @@ const Layout = ({ children }) => {
   const links = data.map(content => ({ path: content.path, linkTitle: content.linkTitle }))
 
   useEffect(() => {
-    if (state.user.name && state.user.email && state.user.password) {
-      dispatch({ type: 'done', payload: {done: true} })
-    } else {
-      dispatch({ type: 'done', payload: {done: false} })
-    }
-    // console.log('asd', state)
-  }, [state.user.name, state.user.email, state.user.password, dispatch])
+    state.user.name
+    && state.user.email
+    && state.user.password
+    && state.privacy.marketing !== undefined
+    && state.privacy.updates !== undefined
+      ? dispatch({ type: 'done', payload: {done: true} })
+      : dispatch({ type: 'done', payload: {done: false} })
+  }, [state.user.name, state.user.email, state.user.password, state.privacy.marketing, state.privacy.updates])
 
   return (
     <ContentData.Provider value={{ formSections, path, contextValue }}>
