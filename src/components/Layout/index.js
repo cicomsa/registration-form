@@ -32,20 +32,20 @@ const Layout = ({ children }) => {
   const content = data.find(content => content.path === pathName)
   const { formSections, path } = content
   const links = data.map(content => ({ path: content.path, linkTitle: content.linkTitle }))
+
+  // set user props for the initialState of the reducer 
+  const userPageContent = data.find(content => content.path === '/user')
   const initialUser = {}
-  if (path === '/user')
-    formSections
-      .filter(section => section.name !== 'Submit')
-      .map(section => {
-        initialUser[section.name] = ''
+  userPageContent.formSections
+    .filter(section => section.name !== 'Submit')
+    .map(section => {
+      initialUser[section.name] = ''
 
-        return initialUser[section.name]
-      }
-    )
-
-    const [state, dispatch] = useReducer(reducer, initialState(initialUser));
-    const contextValue = useMemo(() => {
-    return { state, dispatch };
+      return initialUser[section.name]
+  })
+  const [state, dispatch] = useReducer(reducer, initialState(initialUser));
+  const contextValue = useMemo(() => {
+  return { state, dispatch };
   }, [state, dispatch]);
 
   useEffect(() => {
