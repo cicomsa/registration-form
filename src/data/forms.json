@@ -29,7 +29,7 @@
       },
       {
         "name": "Submit",
-        "type": "button"
+        "type": "button",
         "path": "/privacy"
       }
     ]
