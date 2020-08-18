@@ -47,10 +47,10 @@ const components = {
 
 const Content = () => {
   const content = useContext(ContentData)
-  const { formSections, path, contextValue } = content
+  const { formSections, path, contextValue, initialUser } = content
   const { state, dispatch } = contextValue
   const pageType = path.substring(1)
-  const [data, setData] = useState({ user: {}, privacy: {} })
+  const [data, setData] = useState({ user: {...initialUser}, privacy: {}, done: false })
   const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
 
@@ -92,7 +92,7 @@ const Content = () => {
     {
       formSections.map(section => {
         const Component = components[section.type]
-        const inputValues = state[pageType][section.name]
+        const inputValues = data[pageType][section.name]
         const componentProps = props[section.type]({
           ...section, register, errors, handleChange, inputValues, done: state.done
         })

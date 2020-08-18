@@ -3,11 +3,11 @@ import { useLocation } from 'react-router-dom'
 import Header from '../Header'
 import data from '../../data/forms.json'
 
-const initialState = {
-  user: {},
+const initialState = initialUser => ({
+  user: {...initialUser},
   privacy: {},
   done: false
-}
+})
 
 const reducer = (state, { type, payload }) => {
   switch (type) {
@@ -25,17 +25,28 @@ const reducer = (state, { type, payload }) => {
 const ContentData = createContext({})
 
 const Layout = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation()
   const pathName = location.pathname
 
   // data should come from an API call/GraphQL query - mock functionality not implemented
   const content = data.find(content => content.path === pathName)
-  const contextValue = useMemo(() => {
-  return { state, dispatch };
-}, [state, dispatch]);
   const { formSections, path } = content
   const links = data.map(content => ({ path: content.path, linkTitle: content.linkTitle }))
+  const initialUser = {}
+  if (path === '/user')
+    formSections
+      .filter(section => section.name !== 'Submit')
+      .map(section => {
+        initialUser[section.name] = ''
+
+        return initialUser[section.name]
+      }
+    )
+
+    const [state, dispatch] = useReducer(reducer, initialState(initialUser));
+    const contextValue = useMemo(() => {
+    return { state, dispatch };
+  }, [state, dispatch]);
 
   useEffect(() => {
     state.user.name
@@ -48,7 +59,7 @@ const Layout = ({ children }) => {
   }, [state.user.name, state.user.email, state.user.password, state.privacy.marketing, state.privacy.updates])
 
   return (
-    <ContentData.Provider value={{ formSections, path, contextValue }}>
+    <ContentData.Provider value={{ formSections, path, contextValue, initialUser }}>
       <Header links={links} pathName={pathName} />
       {children(pathName)}
     </ContentData.Provider>
