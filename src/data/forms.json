@@ -29,8 +29,7 @@
       },
       {
         "name": "Submit",
-        "type": "button",
-        "buttonType": "submit",
+        "type": "button"
         "path": "/privacy"
       }
     ]
@@ -56,7 +55,6 @@
       {
         "name": "Submit",
         "type": "button",
-        "buttonType": "submit",
         "path": "/done"
       }
     ]
