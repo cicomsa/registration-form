@@ -6,14 +6,14 @@ import CheckSVG from '../CheckSVG'
 import './index.css'
 
 const props = {
-  button: ({ name, buttonpageType }) => ({ name, buttonpageType }),
+  button: ({ name, buttonType }) => ({ name, buttonType }),
   input: ({ name, inputType, copy, required, register, errors, handleChange, inputValues }) =>
     ({ name, inputType, copy, required, register, errors, handleChange, inputValues }),
   text: ({ name, copyFormCompleted, copyFormIncompleted, done }) => ({ name, copyFormCompleted, copyFormIncompleted, done })
 }
 
 const components = {
-  button: ({ name, buttonpageType }) => <button type={buttonpageType}>{name}</button>,
+  button: ({ name, buttonType }) => <button type={buttonType}>{name}</button>,
   input: ({ name, inputType, copy, required, register, errors, handleChange, inputValues }) => (
     <>
       {!copy && <label htmlFor={name}>{name}</label>}
