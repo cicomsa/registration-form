@@ -30,7 +30,8 @@
       {
         "name": "Submit",
         "type": "button",
-        "buttonType": "submit"
+        "buttonType": "submit",
+        "path": "/privacy"
       }
     ]
   },
@@ -55,7 +56,8 @@
       {
         "name": "Submit",
         "type": "button",
-        "buttonType": "submit"
+        "buttonType": "submit",
+        "path": "/done"
       }
     ]
   },
@@ -64,9 +66,10 @@
     "linkTitle": "Done",
     "formSections": [
       {
-        "name": "Checked",
+        "name": "Done",
         "type": "text",
-        "copy": "Please verify your email address, you should have received an email from us already!"
+        "copyFormCompleted": "Please verify your email address, you should have received an email from us already!",
+        "copyFormIncompleted": "Please complete and submit the User and Privacy forms in order to complete the registration process."
       }
     ]
   }

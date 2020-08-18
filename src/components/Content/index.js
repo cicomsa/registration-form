@@ -1,19 +1,19 @@
-import React, { useContext, useReducer, useState, useEffect } from 'react'
-import { useForm } from "react-hook-form";
-
+import React, { useContext, useState, useEffect } from 'react'
+import { useHistory } from "react-router-dom"
+import { useForm } from 'react-hook-form';
 import { ContentData } from '../Layout'
 import CheckSVG from '../CheckSVG'
 import './index.css'
 
 const props = {
-  button: ({ name, buttonType, handleClick }) => ({ name, buttonType, handleClick }),
+  button: ({ name, buttonpageType }) => ({ name, buttonpageType }),
   input: ({ name, inputType, copy, required, register, errors, handleChange, inputValues }) =>
     ({ name, inputType, copy, required, register, errors, handleChange, inputValues }),
-  text: ({ name, copy }) => ({ name, copy })
+  text: ({ name, copyFormCompleted, copyFormIncompleted, done }) => ({ name, copyFormCompleted, copyFormIncompleted, done })
 }
 
 const components = {
-  button: ({ name, buttonType, handleClick }) => <button type={buttonType} onClick={handleClick}>{name}</button>,
+  button: ({ name, buttonpageType }) => <button type={buttonpageType}>{name}</button>,
   input: ({ name, inputType, copy, required, register, errors, handleChange, inputValues }) => (
     <>
       {!copy && <label htmlFor={name}>{name}</label>}
@@ -29,70 +29,63 @@ const components = {
       {errors[name] && <p>{name} field is required</p>}
     </>
   ),
-  text: ({ name, copy }) => (
+  text: ({ name, copyFormCompleted, copyFormIncompleted, done }) => (
     <div className="wrapper">
-      <CheckSVG />
-      <p>{copy}</p>
+    {
+      done ? (
+        <>
+          <CheckSVG />
+          <p>{copyFormCompleted}</p>
+        </>
+      ) : (
+        <p>{copyFormIncompleted}</p>
+      )
+    }
     </div>
   )
 }
 
-const initialState = {
-  user: {},
-  privacy: {},
-  done: false
-}
-
-const reducer = (state, { type, payload }) => {
-  switch (type) {
-    case 'user':
-      return { ...state, user: {...state.user, ...payload.user} }
-    case 'privacy':
-      return { ...state, privacy: {...state.privacy, ...payload.privacy} }
-    case 'done':
-      return { ...state, done: payload.done }
-    default:
-      return state
-  }
-}
-
 const Content = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const content = useContext(ContentData)
-  const { formSections, path } = content
-  const type = path.substring(1)
+  const { formSections, path, contextValue } = content
+  const { state, dispatch } = contextValue
+  const pageType = path.substring(1)
   const [data, setData] = useState({user: {}, privacy: {}})
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm()
+  const history = useHistory()
 
-  const onSubmit = () => console.log(data)
-  const handleClick = () => {
-    dispatch({ type, payload: {[type]: data[type]} })
+  const onSubmit = () => {
+    const nextpageType = pageType === 'user' ? '/privacy' : pageType === 'privacy' ? '/done' : '/user'
+    dispatch({ type: pageType, payload: {[pageType]: data[pageType]} })
+    history.push(nextpageType)
   }
 
   const handleChange = e => {
-    const { name, value, checked } = e.target
-    setData({...data, [type]: {
-      ...data[type],
-      [name]: checked  === true || checked === false ? checked : value
-    }})
+    const { name, value, checked, type } = e.target
+
+    setData({
+      ...data,
+      [pageType]: {
+        ...data[pageType],
+        [name]: type === 'checkbox' ? checked : value
+      }
+    })
   }
 
   useEffect(() => {
-    if (state.user.name && state.user.email && state.user.password) {
-      dispatch({ type: 'done', payload: {done: true} })
-    } else {
-      dispatch({ type: 'done', payload: {done: false} })
+    if (path === '/done' && state.done) {
+      console.log(state)
     }
-  }, [state.user.name, state.user.email, state.user.password])
+  }, [state, path])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
     {
       formSections.map(section => {
         const Component = components[section.type]
-        const inputValues = state[type][section.name]
+        const inputValues = state[pageType][section.name]
         const componentProps = props[section.type]({
-          ...section, register, errors, handleClick, handleChange, inputValues
+          ...section, register, errors, handleChange, inputValues, done: state.done
         })
 
         return (
