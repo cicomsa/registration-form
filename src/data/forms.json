@@ -7,25 +7,41 @@
         "name": "name",
         "type": "input",
         "inputType": "text",
-        "required": true
+        "conditions": {
+          "required": "Name field is required."
+        }
       },
       {
         "name": "role",
         "type": "input",
         "inputType": "text",
-        "required": false
+        "conditions": {
+          "required": false
+        }
       },
       {
         "name": "email",
         "type": "input",
-        "inputType": "text",
-        "required": true
+        "inputType": "email",
+        "conditions": {
+          "pattern": {
+            "value": "/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i",
+            "message": "Invalid email addres. Email must have standard email format. Please try again."
+          },
+          "required": "Email field is required."
+        }
       },
       {
         "name": "password",
         "type": "input",
-        "inputType": "encryption",
-        "required": true
+        "inputType": "password",
+        "conditions": {
+          "pattern": {
+            "value": "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{9,}$/",
+            "message": "Invalid password. Password must have minimum 9 characters of which minimum 1 uppercase letter, 1 lowercase letter and 1 number."
+          },
+          "required": "Password field is required."
+        }
       },
       {
         "name": "Submit",
@@ -42,15 +58,19 @@
         "name": "updates",
         "type": "input",
         "inputType": "checkbox",
-        "required": false,
-        "copy": "Receive updates about Tray.io product by email"
+        "copy": "Receive updates about Tray.io product by email",
+        "conditions": {
+          "required": false
+        }
       },
       {
         "name": "marketing",
         "type": "input",
         "inputType": "checkbox",
-        "required": false,
-        "copy": "Receive communication by email for other products created by the Tray.io team"
+        "copy": "Receive communication by email for other products created by the Tray.io team",
+        "conditions": {
+          "required": false
+        }
       },
       {
         "name": "Submit",
