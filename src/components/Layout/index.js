@@ -13,9 +13,11 @@ const Layout = ({ children }) => {
   const content = data.find(content => content.path === pathName)
   const { formSections } = content
   const links = data.map(content => ({ path: content.path, linkTitle: content.linkTitle }))
+  const nextPathIndex = data.indexOf(content) + 1
+  const nextPath = data[nextPathIndex] ? data[nextPathIndex].path : data[0].path
 
   return (
-    <ContentData.Provider value={{ formSections }}>
+    <ContentData.Provider value={{ formSections, nextPath }}>
       <Header links={links} pathName={pathName} />
       {children(pathName)}
     </ContentData.Provider>

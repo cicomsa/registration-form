@@ -55,19 +55,18 @@ const reducer = (state, { type, payload }) => {
 const Content = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const content = useContext(ContentData)
-  const { formSections } = content
+  const { formSections, nextPath } = content
   const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
   const path = history.location.pathname
   const pageType = path.substring(1)
   const onSubmit = () => {
-    const nextPageType = pageType === 'user' ? '/privacy' : pageType === 'privacy' ? '/done' : '/user'
     if (pageType === 'privacy') {
       // 'state.privacy' values to be reconsidered
      // if (!state.privacy.updates) state.privacy.updates = false
      // if (!state.privacy.marketing) state.privacy.marketing = false
    }
-    history.push(nextPageType)
+    history.push(nextPath)
   }
 
   useEffect(() => {
