@@ -47,8 +47,6 @@ const reducer = (state, { type, payload }) => {
       return { ...state, user: {...state.user, ...payload.user} }
     case 'privacy':
       return { ...state, privacy: {...state.privacy, ...payload.privacy} }
-    case 'done':
-      return { ...state, done: payload.done }
     default:
       return state
   }
