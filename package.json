@@ -10,7 +10,8 @@
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.4.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "regex-parser": "^2.2.11"
   },
   "scripts": {
     "start": "react-scripts start",
