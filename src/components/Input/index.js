@@ -1,14 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import regexParser from 'regex-parser'
 
 const Input = ({ name, inputType, copy, conditions, register, errors, pageType, state, dispatch }) => {
-  const [inputValue, setInputValue] = useState("")
-
-  const handleChange = e => {
-    const { value, checked, type } = e.target
-    setInputValue(type === 'checkbox' ? checked : value)
-  }
-
   const handleBlur = e => {
     const { name, value, checked, type } = e.target
 
@@ -25,8 +18,7 @@ const Input = ({ name, inputType, copy, conditions, register, errors, pageType, 
   }
 
   if (conditions.pattern && typeof conditions.pattern.value === 'string') {
-    let regex = conditions.pattern.value
-    regex = regexParser(regex)
+    const regex = regexParser(conditions.pattern.value)
     conditions.pattern.value = regex
   }
 
@@ -37,9 +29,8 @@ const Input = ({ name, inputType, copy, conditions, register, errors, pageType, 
         type={inputType}
         id={name}
         name={name}
-        onChange={handleChange}
         onBlur={handleBlur}
-        value={inputValue}
+        defaultValue={state[pageType] ? state[pageType][name] : ''}
         ref={register({
           ...conditions
         })}
