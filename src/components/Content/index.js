@@ -22,7 +22,6 @@ const components = {
   text: ({ name, copyFormCompleted, copyFormIncompleted, done }) => (
     <div className="wrapper">
     {
-      // 'done' to be reconsidered
       done ? (
         <>
           <CheckSVG />
@@ -36,10 +35,7 @@ const components = {
   )
 }
 
-const initialState = {
-  user: {},
-  privacy: {}
-}
+const initialState = {}
 
 const reducer = (state, { type, payload }) => {
   switch (type) {
@@ -60,20 +56,14 @@ const Content = () => {
   const history = useHistory()
   const path = history.location.pathname
   const pageType = path.substring(1)
-  const onSubmit = () => {
-    if (pageType === 'privacy') {
-      // 'state.privacy' values to be reconsidered
-     // if (!state.privacy.updates) state.privacy.updates = false
-     // if (!state.privacy.marketing) state.privacy.marketing = false
-   }
-    history.push(nextPath)
-  }
+  const done = state.privacy && state.user // to make it more dynamic
+  const onSubmit = () => history.push(nextPath)
 
   useEffect(() => {
-    if (path === '/done') {
+    if (path === '/done' && done) {
       console.log(state)
     }
-  }, [path, state])
+  }, [path, state, done])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -81,7 +71,7 @@ const Content = () => {
       formSections.map(section => {
         const Component = components[section.type]
         const componentProps = props[section.type]({
-          ...section, register, errors, done: true, dispatch, state, pageType
+          ...section, register, errors, done, dispatch, state, pageType
         })
 
         return (
