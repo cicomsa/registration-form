@@ -24,6 +24,7 @@ const Input = ({ name, inputType, copy, conditions, register, errors, pageType, 
     })
   }
 
+  // to be fixed
   if (conditions.pattern) conditions.pattern.value = new RegExp(conditions.pattern.value)
 
   return (
