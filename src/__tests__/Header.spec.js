@@ -27,6 +27,6 @@ describe('Header', () => {
   })
   it('should return three children', () => {
     const wrapper = mount(<Header {...props} />)
-    expect(wrapper.find('.link').length).toEqual(3)
+    expect(wrapper.find('li').length).toEqual(3)
   })
 })
