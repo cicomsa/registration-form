@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
-import { when } from 'jest-when'
 import PageLink from '../components/PageLink'
 
 const props = {
@@ -34,12 +33,11 @@ describe('PageLink', () => {
     expect(wrapper.find('.active').exists()).toBe(true)
   })
   it('should redirect to correct page', () => {
-    const wrapper = mount(<PageLink {...props} />)
-
     const history = createMemoryHistory({ initialEntries: ['/privacy'], push: jest.fn() })
     const spy = jest.spyOn(history, 'push');
     history.push(props.path);
 
+    // const wrapper = mount(<PageLink {...props} />)
     // wrapper.find('li').simulate('click')
 
     expect(spy).toHaveBeenCalled();
