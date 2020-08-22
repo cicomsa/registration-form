@@ -2,7 +2,6 @@ import * as React from 'react'
 import { shallow } from 'enzyme'
 import * as ContentData from '../components/Layout/Context';
 import Content from '../components/Content';
-import Input from '../components/Input'
 
 jest.mock('react-router-dom', () => ({
     useHistory: jest.fn().mockReturnValue({
