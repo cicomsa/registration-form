@@ -1,9 +1,8 @@
-import React, { createContext } from 'react'
+import React from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from '../Header'
 import data from '../../data/forms.json'
-
-const ContentData = createContext({})
+import ContentData from './Context'
 
 const Layout = ({ children }) => {
   const location = useLocation()
@@ -24,5 +23,4 @@ const Layout = ({ children }) => {
   )
 }
 
-export { ContentData }
 export default Layout

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { ContentData } from '../Layout'
+import { useContentData } from '../Layout/Context'
 import CheckSVG from '../CheckSVG'
 import Input from '../Input'
 import './index.css'
@@ -50,7 +50,7 @@ const reducer = (state, { type, payload }) => {
 
 const Content = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const content = useContext(ContentData)
+  const content = useContentData()
   const { formSections, nextPath } = content
   const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
