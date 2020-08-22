@@ -39,15 +39,14 @@ const content = {
       "path": "/done"
     }
   ]
- }
+}
 
 jest
   .spyOn(ContentData, 'useContentData')
   .mockImplementation(() => content);
 
 describe('Content', () => {
-  it('it should mock the context', () => {
-
+  it('it should exist', () => {
     const wrapper = shallow(<Content />);
     expect(wrapper.find('form').exists()).toBe(true)
   })
