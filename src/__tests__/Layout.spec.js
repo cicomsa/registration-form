@@ -23,19 +23,19 @@ jest.mock('mockData', () => mockData, { virtual: true })
 const children = () => <Content />
 
 describe('Layout', () => {
-  it('it should exist', () => {
+  it('should return component', () => {
     const wrapper = shallow(<Layout children={children} />)
     expect(wrapper.exists()).toBe(true)
   })
-  it('it should return two children', () => {
+  it('should return two children', () => {
     const wrapper = shallow(<Layout children={children} />)
     expect(wrapper.children().length).toEqual(2)
   })
-  it('it should contain the Header component', () => {
+  it('should contain the Header component', () => {
     const wrapper = shallow(<Layout children={children} />)
     expect(wrapper.find(Header).exists()).toBe(true)
   })
-  it('it should contain the Content component', () => {
+  it('should contain the Content component', () => {
     const wrapper = shallow(<Layout children={children} />)
     expect(wrapper.find(Content).exists()).toBe(true)
   })

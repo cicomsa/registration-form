@@ -46,7 +46,7 @@ jest
   .mockImplementation(() => content);
 
 describe('Content', () => {
-  it('it should exist', () => {
+  it('should return component', () => {
     const wrapper = shallow(<Content />);
     expect(wrapper.find('form').exists()).toBe(true)
   })
