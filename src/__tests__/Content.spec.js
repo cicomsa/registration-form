@@ -2,6 +2,7 @@ import * as React from 'react'
 import { shallow } from 'enzyme'
 import * as ContentData from '../components/Layout/Context';
 import Content from '../components/Content';
+import Input from '../components/Input'
 
 jest.mock('react-router-dom', () => ({
     useHistory: jest.fn().mockReturnValue({
@@ -53,5 +54,21 @@ describe('Content', () => {
   it('should return three children', () => {
     const wrapper = shallow(<Content />)
     expect(wrapper.find('form').children().length).toEqual(3)
+  })
+  it('should return input component', () => {
+    const wrapper = shallow(<Content />);
+    expect(wrapper.find('input').exists()).toBe(true)
+  })
+  it('should contain input component', () => {
+    const wrapper = shallow(<Content />);
+    expect(wrapper.find('input').exists()).toBe(true)
+  })
+  it('should contain two inputs', () => {
+    const wrapper = shallow(<Content />);
+    expect(wrapper.find('input').length).toBe(2)
+  })
+  it('should contain button component', () => {
+    const wrapper = shallow(<Content />);
+    expect(wrapper.find('button').exists()).toBe(true)
   })
 });
