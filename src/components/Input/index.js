@@ -26,6 +26,7 @@ const Input = ({ name, inputType, copy, conditions, register, errors, pageType, 
     <>
       {!copy && <label htmlFor={name}>{name}</label>}
       <input
+        className="input"
         type={inputType}
         id={name}
         name={name}
