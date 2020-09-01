@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useContentData } from '../Layout/Context'
@@ -8,15 +8,15 @@ import './index.css'
 
 const props = {
   button: ({ name }) => ({ name }),
-  input: ({ name, inputType, copy, conditions, register, errors, pageType, state, dispatch }) =>
-    ({ name, inputType, copy, conditions, register, errors, pageType, state, dispatch }),
+  input: ({ name, inputType, copy, conditions, register, errors, pageType, values, setValues }) =>
+    ({ name, inputType, copy, conditions, register, errors, pageType, values, setValues }),
   text: ({ name, copyFormCompleted, copyFormIncompleted, done }) => ({ name, copyFormCompleted, copyFormIncompleted, done })
 }
 
 const components = {
   button: ({ name }) => <button type="submit">{name}</button>,
-  input: ({ name, inputType, copy, conditions, register, errors, pageType, state, dispatch }) => {
-    const inputProps = { name, inputType, copy, conditions, register, errors, pageType, state, dispatch }
+  input: ({ name, inputType, copy, conditions, register, errors, pageType, values, setValues }) => {
+    const inputProps = { name, inputType, copy, conditions, register, errors, pageType, values, setValues }
     return <Input {...inputProps} />
   },
   text: ({ name, copyFormCompleted, copyFormIncompleted, done }) => (
@@ -38,11 +38,10 @@ const components = {
 const initialState = {}
 
 const reducer = (state, { type, payload }) => {
+  console.log(payload)
   switch (type) {
-    case 'user':
-      return { ...state, user: {...state.user, ...payload.user} }
-    case 'privacy':
-      return { ...state, privacy: {...state.privacy, ...payload.privacy} }
+    case 'register':
+      return { ...state, ...payload }
     default:
       return state
   }
@@ -50,20 +49,30 @@ const reducer = (state, { type, payload }) => {
 
 const Content = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [values, setValues] = useState({})
   const content = useContentData()
   const { formSections, nextPath } = content
   const { register, handleSubmit, errors } = useForm()
   const history = useHistory()
   const path = history.location.pathname
   const pageType = path.substring(1)
-  const done = state.privacy && state.user // to make it more dynamic
-  const onSubmit = () => history.push(nextPath)
+  const done = state.name && state.email && state.password
+
+  const onSubmit = () => {
+    if (pageType === 'privacy')
+      dispatch({
+        type: 'register',
+        payload: values
+      })
+
+    history.push(nextPath)
+  }
 
   useEffect(() => {
     if (path === '/done' && done) {
       console.log(state)
     }
-  }, [path, state, done])
+  }, [path, state, values, done])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -71,7 +80,7 @@ const Content = () => {
       formSections.map(section => {
         const Component = components[section.type]
         const componentProps = props[section.type]({
-          ...section, register, errors, done, dispatch, state, pageType
+          ...section, register, errors, done, pageType, values, setValues
         })
 
         return (

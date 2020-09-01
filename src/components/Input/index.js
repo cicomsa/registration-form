@@ -1,20 +1,11 @@
 import React from 'react'
 import regexParser from 'regex-parser'
 
-const Input = ({ name, inputType, copy, conditions, register, errors, pageType, state, dispatch }) => {
-  const handleBlur = e => {
+const Input = ({ name, inputType, copy, conditions, register, errors, pageType, values, setValues }) => {
+  const handleChange = e => {
     const { name, value, checked, type } = e.target
 
-    dispatch({
-      type: pageType,
-      payload: {
-        ...state,
-        [pageType]: {
-          ...state[pageType],
-          [name]: type === 'checkbox' ? checked : value
-        }
-      }
-    })
+    setValues({...values, [name]:type === 'checkbox' ? checked : value})
   }
 
   if (conditions.pattern && typeof conditions.pattern.value === 'string') {
@@ -30,8 +21,8 @@ const Input = ({ name, inputType, copy, conditions, register, errors, pageType, 
         type={inputType}
         id={name}
         name={name}
-        onBlur={handleBlur}
-        defaultValue={state[pageType] ? state[pageType][name] : ''}
+        onChange={handleChange}
+        value={values[name] ? values[name] : ''}
         ref={register({
           ...conditions
         })}
