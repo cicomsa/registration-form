@@ -3,9 +3,9 @@ import regexParser from 'regex-parser'
 
 const Input = ({ name, inputType, copy, conditions, register, errors, pageType, values, setValues }) => {
   const handleChange = e => {
-    const { name, value, checked, type } = e.target
+    const { name, value, checked } = e.target
 
-    setValues({...values, [name]:type === 'checkbox' ? checked : value})
+    setValues({...values, [name]: inputType === 'checkbox' ? checked : value})
   }
 
   if (conditions.pattern && typeof conditions.pattern.value === 'string') {

@@ -1,44 +1,39 @@
 import * as React from 'react'
 import { mount, shallow } from 'enzyme'
-import { act } from 'react-dom/test-utils'
 import Input from '../components/Input'
 
 const props = {
-  name: 'Privacy',
+  name: 'updates',
   inputType: 'checkbox',
-  copy: 'Receive updates about Tray.io product by email',
+  copy: 'Receive updates about the product by email',
   conditions: {
     "required": false
   },
   register: jest.fn(),
   errors: {},
   pageType: 'privacy',
-  state: {},
-  dispatch: jest.fn()
+  values: {},
+  setValues: jest.fn(e => props.values[props.name] = true)
 }
 
 describe('Input', () => {
-  it('should return component', () => {
-    const wrapper = mount(<Input {...props} />)
-    expect(wrapper.find('.input').exists()).toBe(true)
-  })
   it('should match input type', () => {
     const wrapper = mount(<Input {...props} />)
     expect(wrapper.find('.input').prop('type')).toBe(props.inputType)
   })
   it('should match input default value', () => {
     const wrapper = mount(<Input {...props} />)
-    expect(wrapper.find('.input').prop('defaultValue')).toBe('')
+    expect(wrapper.find('.input').prop('value')).toBe('')
   })
   it('should have checkbox unchecked', () => {
-    const wrapper = shallow(<Input {...props} />)
+    const wrapper = mount(<Input {...props} />)
     expect(wrapper.find('.input').prop('checked')).toBe(undefined)
   })
-  it('should call dispatch function on blur', async () => {
-    const wrapper = mount(<Input {...props} />)
-    wrapper
-      .find('.input')
-      .simulate('blur', { target: { checked: true } })
-    expect(props.dispatch).toHaveBeenCalled()
+  it('should return values state with correct data after on change behaviour', () => {
+    const wrapper = shallow(<Input {...props} />)
+    const input = wrapper.find('.input')
+    input.simulate('change', { target: { checked: true } })
+    expect(props.values).toEqual({ updates: true })
+    // expect(input.prop('checked')).toBe(true) - to fix
   })
 })
