@@ -10,6 +10,9 @@ const Layout = ({ children }) => {
 
   // data should come from an API call/GraphQL query - mock functionality not implemented
   const content = data.find(content => content.path === pathName)
+
+  if (!content) return null
+
   const { formSections } = content
   const links = data.map(content => ({ path: content.path, linkTitle: content.linkTitle }))
   const nextPathIndex = data.indexOf(content) + 1

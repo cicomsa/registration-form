@@ -44,7 +44,7 @@
         }
       },
       {
-        "name": "Submit",
+        "name": "Next",
         "type": "button",
         "path": "/privacy"
       }
@@ -58,7 +58,7 @@
         "name": "updates",
         "type": "input",
         "inputType": "checkbox",
-        "copy": "Receive updates about Tray.io product by email",
+        "copy": "Receive updates about the product by email",
         "conditions": {
           "required": false
         }
@@ -67,7 +67,7 @@
         "name": "marketing",
         "type": "input",
         "inputType": "checkbox",
-        "copy": "Receive communication by email for other products created by the Tray.io team",
+        "copy": "Receive communication by email for other products created by the team",
         "conditions": {
           "required": false
         }
