@@ -3,13 +3,17 @@ import { shallow } from 'enzyme'
 import * as ContentData from '../components/Layout/Context';
 import Content from '../components/Content';
 
+
+const mockPush = jest.fn()
+
+
 jest.mock('react-router-dom', () => ({
-    useHistory: jest.fn().mockReturnValue({
-      location: {
-        pathname: '/privacy',
-      },
-      push: jest.fn(),
-    }),
+  useHistory: () => ({
+    location: {
+      pathname: '/privacy',
+    },
+    push: mockPush,
+  })
 }));
 
 const content = {
@@ -46,21 +50,9 @@ jest
   .mockImplementation(() => content);
 
 describe('Content', () => {
-  it('should return component', () => {
-    const wrapper = shallow(<Content />);
-    expect(wrapper.find('form').exists()).toBe(true)
-  })
   it('should return three children', () => {
     const wrapper = shallow(<Content />)
     expect(wrapper.find('form').children().length).toEqual(3)
-  })
-  it('should return input component', () => {
-    const wrapper = shallow(<Content />);
-    expect(wrapper.find('input').exists()).toBe(true)
-  })
-  it('should contain input component', () => {
-    const wrapper = shallow(<Content />);
-    expect(wrapper.find('input').exists()).toBe(true)
   })
   it('should contain two inputs', () => {
     const wrapper = shallow(<Content />);
@@ -69,5 +61,12 @@ describe('Content', () => {
   it('should contain button component', () => {
     const wrapper = shallow(<Content />);
     expect(wrapper.find('button').exists()).toBe(true)
+  })
+  it('should call the action to redirect to nextPath page on button click behaviour', () => {
+    const wrapper = shallow(<Content />);
+    const button = wrapper.find('form')
+    button.simulate('submit')
+
+    expect(mockPush).toHaveBeenCalledWith(content.nextPath)
   })
 });

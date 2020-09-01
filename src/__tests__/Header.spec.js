@@ -21,10 +21,6 @@ const props = {
 }
 
 describe('Header', () => {
-  it('should return component', () => {
-    const wrapper = mount(<Header {...props} />)
-    expect(wrapper.find('.links').exists()).toBe(true)
-  })
   it('should return three children', () => {
     const wrapper = mount(<Header {...props} />)
     expect(wrapper.find('li').length).toEqual(3)

@@ -38,7 +38,6 @@ const components = {
 const initialState = {}
 
 const reducer = (state, { type, payload }) => {
-  console.log(payload)
   switch (type) {
     case 'register':
       return { ...state, ...payload }
